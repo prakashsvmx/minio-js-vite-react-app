@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "minio": "^7.0.32",
+    "minio": "^7.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "vite-plugin-ngmi-polyfill": "^0.0.2"

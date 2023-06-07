@@ -3,16 +3,39 @@ import mc from "./utils/mc";
 
 const ListBuckets = () => {
     const [buckets, setBuckets] = useState([]);
+
     const getBuckets = async () => {
         const res = await mc.listBuckets();
         setBuckets(res);
     };
 
+    const listFirstBucketObject =  () =>{
+        if(buckets.length){
+            const objectsStream =  mc.listObjects(buckets[0].name,"", true);
+            objectsStream.on("data", async (chunk) => {
+                console.log(chunk)
+            })
+
+            objectsStream.on("error", (err) => {
+            });
+            objectsStream.on("end", () => {
+            });
+        }
+    }
+
     useEffect(() => {
         getBuckets();
     }, []);
 
+    useEffect(()=>{
+        if(buckets.length){
+            listFirstBucketObject()
+        }
+
+    },[buckets])
+
     return (
+        <>
 
             <table className="table-auto border-collapse table-fixed w-full text-sm">
                 <thead>
@@ -34,6 +57,9 @@ const ListBuckets = () => {
                 })}
                 </tbody>
             </table>
+
+
+            </>
 
     );
 };
